@@ -10,9 +10,8 @@ BEFORE RUNNING CODE(!)
 
 Enter the following on terminal to import relevant packages:
 
-'''pip3 install wfdb
-
-pip3 install keras'''
+pip3 install wfdb
+pip3 install keras
 
 Download the database through link 1 (top),
 Unzip the download to get a folder called "mit-bih-normal-sinus-rhythm-database-1.0.0". It should contain lots of files including some ending with .dat
