@@ -13,10 +13,9 @@ count=0
 file = open("mit-bih-normal-sinus-rhythm-database-1.0.0/16265.dat", "rb")
 
 byte = file.read(1)
-print(byte)
 #byte=int.from_bytes(byte, "little")
 while byte: #byte=false at end of file
-    #print(byte)
+    print(byte)
     for i in range(len(a)):
         a[i]=byte
         #a_t[i]=str(type(byte))
@@ -28,6 +27,6 @@ while byte: #byte=false at end of file
     count+=1
 df=a
 file.close()
-#print(df)
+print(df)
 
 pd.DataFrame(a).to_excel("16265_a.xlsx")
