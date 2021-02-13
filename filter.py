@@ -10,16 +10,16 @@ print(df.head())
 xVal=df[["'sample interval'"]]
 yVal=df[["'ECG1'"]]
 
-def plot_data(xVal,yVal,length):
+def plot_data(xVal,yVal,length,Title='ECG Signal'):
     plt.figure()
     plt.plot(xVal[0:length]/360,yVal[0:length])
     ax=plt.gca()
     ax.axes.yaxis.set_ticks([])
     plt.ylabel("Amplitude")
-    plt.title("ECG Signal")
+    plt.title(Title)
     plt.show()
 
-plot_data(xVal,yVal,1000)
+plot_data(xVal,yVal,1000,'Original Signal')
 
 def highpass(sampling_rate,cutoff=0.05,order=2):
     nyquist_freq = 0.5 * sampling_rate
@@ -54,10 +54,10 @@ def filter(data, sampling_rate, cutoff, order=2, filtertype='lowpass'):
     return filtered_df
 
 filtered_signal2 = filter(yVal,100,0.05,2,'highpass')
-plot_data(xVal,filtered_signal2,1000)
+plot_data(xVal,filtered_signal2,1000,'Highpass Filtered')
 
 filtered_signal3 = filter(yVal,100,3,2,'lowpass')
-plot_data(xVal,filtered_signal3,1000)
+plot_data(xVal,filtered_signal3,1000,'Lowpass Filtered')
 
 filtered_signal4 = filter(yVal,100,0.05,2,'notch')
-plot_data(xVal,filtered_signal4,1000)
+plot_data(xVal,filtered_signal4,1000,'Notch Filtered')
