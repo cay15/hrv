@@ -21,21 +21,25 @@ def plot_data(xVal,yVal,length):
 
 plot_data(xVal,yVal,1000)
 
-def highpass(cutoff=0.05,order=2):
-    b, a = butter(order, cutoff, btype='high', analog=False)
+def highpass(sampling_rate,cutoff=0.05,order=2):
+    nyquist_freq = 0.5 * sampling_rate
+    normalCutoff = cutoff / nyquist_freq
+    b, a = butter(order, normalCutoff, btype='high', analog=False)
     return b, a
 
-def lowpass(cutoff,order=2):
-    b, a = butter(order, cutoff, btype='low', analog=False)
+def lowpass(sampling_rate,cutoff=150,order=2):
+    nyquist_freq = 0.5 * sampling_rate
+    normalCutoff = cutoff / nyquist_freq
+    b, a = butter(order, normalCutoff, btype='low', analog=False)
     return b, a
 
-def filter(data, sample_rate, cutoff, order=2, filtertype='lowpass'):
+def filter(data, sampling_rate, cutoff, order=2, filtertype='lowpass'):
     if filtertype.lower() == 'lowpass':
-        b, a = lowpass(cutoff, order=order)
+        b, a = lowpass(sampling_rate, cutoff, order=order)
     elif filtertype.lower() == 'highpass':
-        b, a = highpass(cutoff, order=order)
+        b, a = highpass(sampling_rate, cutoff, order=order)
     elif filtertype.lower() == 'notch':
-        b, a = iirnotch(cutoff, Q=0.005, fs=sample_rate)
+        b, a = iirnotch(cutoff, Q=0.005, fs=sampling_rate)
     else:
         raise ValueError('filtertype: %s is unknown, available are: \ lowpass, highpass, and notch' % filtertype)
 
@@ -52,8 +56,8 @@ def filter(data, sample_rate, cutoff, order=2, filtertype='lowpass'):
 filtered_signal2 = filter(yVal,100,0.05,2,'highpass')
 plot_data(xVal,filtered_signal2,1000)
 
-#filtered_signal3 = filter(yVal,100,2,2,'lowpass')
-#plot_data(xVal,filtered_signal3,1000)
+filtered_signal3 = filter(yVal,100,3,2,'lowpass')
+plot_data(xVal,filtered_signal3,1000)
 
 filtered_signal4 = filter(yVal,100,0.05,2,'notch')
 plot_data(xVal,filtered_signal4,1000)
