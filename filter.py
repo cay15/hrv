@@ -21,19 +21,6 @@ def plot_data(xVal,yVal,length):
 
 plot_data(xVal,yVal,1000)
 
-def remove_baseline_drift(data,sample_rate,cutoff=0.05):
-    b, a = iirnotch(cutoff, Q=0.005, fs=sample_rate)    # get coefficients for notch filter
-    signal = data.to_numpy()    # convert column in dataframe to a numpy array
-    signal = signal.T
-    filtered_data = filtfilt(b, a, signal)    # applies notch filter forward and backward to a signal
-    filtered_data = filtered_data.T
-    filtered_df = pd.DataFrame(filtered_data, columns=['y'])
-    print(filtered_df)
-    return filtered_df
-
-filtered_signal = remove_baseline_drift(yVal,100.0,0.05)
-plot_data(xVal,filtered_signal,1000)
-
 def highpass(cutoff=0.05,order=2):
     b, a = butter(order, cutoff, btype='high', analog=False)
     return b, a
