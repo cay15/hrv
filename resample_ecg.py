@@ -6,15 +6,17 @@ Created on Sat Feb 13 19:57:13 2021
 #Signal was exported as .csv from PhysioBank ATM 
 #(https://archive.physionet.org/cgi-bin/atm/ATM)
 #Data used: MIT BIH normal sinus rhythm database (record: 16265)
-#ECG1 is MLII lead
-#ECG2 is V5 lead
-#Length of signal: To end (1 minute)
-#Time format: Seconds
-#Data format: Standard
-#Total no.of samples: 7679
+            #ECG1 is MLII lead
+            #ECG2 is V5 lead
+            #Length of signal: To end (1 minute)
+            #Time format: Seconds
+            #Data format: Standard
+            #Total no.of samples: 7679
+            
+#I renamed the data file from 'samples.csv' to '16265_secs_toend.csv' to avoid confusion between datasets. Check what you have named your file before running this code.
 
-#Sampling interval, T = 0.0078125s
-#Sampling rate, fs = 1/T = 128 Hz
+#OG Sampling interval, T = 0.0078125s
+#OG Sampling rate, fs = 1/T = 128 Hz
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -79,7 +81,7 @@ ecg2_original = np.array(whole_signal.ecg2[0:(f_samp2+1)])
 time2 = np.array(whole_signal.t[0:(f_samp2+1)])
 
 
-#plot ECG 1 for both f_samp (only first second)
+#plot ECG 1 for both sampling frequencies (only first second)
 fig = plt.figure(4)
 plt.subplot(1,2,1)
 plt.plot(time1, ecg1)
@@ -96,7 +98,7 @@ plt.title("ECG1 for 1 second (fs = 128Hz)")
 fig.tight_layout()
 fig.set_size_inches(w=11,h=7)
 
-#plot ECG 2 for both f_samp(only first second)
+#plot ECG 2 for both sampling frequencies (only first second)
 fig = plt.figure(5)
 plt.subplot(1,2,1)
 plt.plot(time1, ecg2)
