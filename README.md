@@ -3,11 +3,6 @@
 ## Links
 Database of normal sinus rhythms: https://www.kaggle.com/shymammoth/mitbih-normal-sinus-rhythm-database
 
-Download the database through the above link,
-Unzip the download to get a folder called "mit-bih-normal-sinus-rhythm-database-1.0.0". It should contain lots of files including some ending with .dat
-Keep a note of the file path where you saved the folder in your local computer i.e. "[file paths]/mit-bih-normal-sinus-rhythm-database-1.0.0"
-
-
 ## File descriptions
 ### Databases
 mit-bih-normal-sinus-rhythm-database-1.0.0 (folder)
