@@ -32,8 +32,7 @@ ecgSample.csv
 - .csv version of sample 16265 (see mit-bih-normal-sinus-rhythm-database-1.0.0)
 
 ### Week of 2/2
-52.py
-53.py
+52.py, 53.py
 - Simple plotting of ECG using matplotlib
 
 derivative_approach.py
