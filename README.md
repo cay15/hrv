@@ -12,6 +12,7 @@ mit-bih-normal-sinus-rhythm-database-1.0.0 (folder)
 ### Week of 9/2
 filter.py
 - Filters for ECG
+- Adapted from From https://python-heart-rate-analysis-toolkit.readthedocs.io/en/latest/_modules/heartpy/filtering.html
 
 resample_ecg.py
 - Resampling of ECG at different frequencies
