@@ -12,7 +12,7 @@ yVal=df[["'ECG1'"]]
 
 y=yVal[0:1000].to_numpy()
 y=y.ravel() # converts ECG data to 1D array, the appropriate format for find_peaks
-#print(y)
+#print(y)p
 
 '''
 The maximal possible time window of one QRS wave is taken to be 150ms
