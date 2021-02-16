@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
+from math import sqrt
 
 df=pd.read_csv('ecgSample.csv',header=[0, 1])
 print(df.head())
@@ -24,17 +25,32 @@ Taking a threshold height (y value) of 0.1 rectifies this problem, though the di
 '''
 
 # Plot ECG with peaks indicated
-peaks, _ = find_peaks(y,height=0.1) #distance=48
+peaks, _ = find_peaks(y,height=None, distance=48) #distance=48
 plt.plot(xVal[0:1000],y)
 plt.plot(peaks, y[peaks],"x")
 #plt.plot(np.zeros_like(y), "--", color="gray") # y axis at 0
 plt.show()
 
 peaks=peaks*0.0078125 # Convert from sample number to time in seconds
+print("Peaks:")
+print(peaks)
 
 # Return array of RR intervals
 rr_intervals=[0]*(len(peaks)-1)
 
 for i in range(len(rr_intervals)):
     rr_intervals[i]=peaks[i+1]-peaks[i]
+print("RR intervals:")
 print(rr_intervals)
+
+total=0
+total_sq=0
+for j in range(len(rr_intervals)):
+    total+=rr_intervals[j]
+    total_sq+=(rr_intervals[j]*rr_intervals[i])
+SDNN=sqrt(total_sq/len(rr_intervals))
+avg=total/len(rr_intervals)
+print("SDNN: ")
+print(SDNN)
+print("Average RR interval:")
+print(avg)
