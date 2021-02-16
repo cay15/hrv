@@ -7,21 +7,6 @@ from scipy.signal import filtfilt, iirnotch, butter
 #df=pd.read_csv('ecgSample.csv',header=[0, 1])
 #print(df.head())
 
-#create a table with 3 columns depending on .csv file
-column_names = [
-    't',
-    'ecg1',
-    'ecg2',
-    ]
-
-#read the .csv file into a dataframe using pandas and skip the first 2 rows
-whole_signal = pd.read_csv('ecgSample.csv', sep=',',
-                           names = column_names, skiprows = 2)
-xVal = whole_signal.t
-yVal = whole_signal.ecg1
-#xVal=df[["'sample interval'"]]
-#yVal=df[["'ECG1'"]]
-
 def plot_data(xVal,yVal,length,Title='ECG Signal'):
     plt.figure()
     plt.plot(xVal[0:length]/360,yVal[0:length])
@@ -30,8 +15,6 @@ def plot_data(xVal,yVal,length,Title='ECG Signal'):
     plt.ylabel("Amplitude")
     plt.title(Title)
     plt.show()
-
-plot_data(xVal,yVal,1000,'Original Signal')
 
 def highpass(sampling_rate,cutoff=0.05,order=2):
 
@@ -120,15 +103,3 @@ def filter(data, sampling_rate, cutoff, order=2, filtertype='lowpass'):
     return filtered_df
 
 
-
-filtered_signal2 = filter(yVal,1000,0.5,2,'highpass')
-plot_data(xVal,filtered_signal2,1000,'Highpass Filtered')
-
-filtered_signal3 = filter(yVal,1000,3,2,'lowpass')
-plot_data(xVal,filtered_signal3,1000,'Lowpass Filtered')
-
-filtered_signal4 = filter(yVal,1000,50,2,'notch')
-plot_data(xVal,filtered_signal4,1000,'Notch Filtered')
-
-filtered_signal5 = filter(yVal,1000,150,2,'lowpass')
-plot_data(xVal,filtered_signal5,1000,'Lowpass Filtered')
