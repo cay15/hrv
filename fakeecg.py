@@ -75,18 +75,16 @@ def addoffset(ecg, amp):
     offset_ecg = [x+delta for x in ecg]
     return offset_ecg
 
-samples=60  #time in seconds of fake ecg  
-ecg, x=fakeecg(samples)
+def fakeecg(samples)  #samples is time in seconds of fake ecg  
+    ecg, x=fakeecg(samples)
 
-mainsecg=addnoise(ecg, samples, 50, 0.25) #adds mains noise of 50Hz
-basedriftecg=addnoise(mainsecg, samples, 0.3, 0.1) #adds baseline drift of 0.3Hz
-smallerdrift=addnoise(basedriftecg, samples, 0.01, 0.2) #adds lower frequency baseline drift of 0.01Hz
-noisedecg=randomnoise(basedriftecg)
-offset=addoffset(noisedecg, 0.5)
+    mainsecg=addnoise(ecg, samples, 50, 0.25) #adds mains noise of 50Hz
+    basedriftecg=addnoise(mainsecg, samples, 0.3, 0.1) #adds baseline drift of 0.3Hz
+    smallerdrift=addnoise(basedriftecg, samples, 0.01, 0.2) #adds lower frequency baseline drift of 0.01Hz
+    noisedecg=randomnoise(basedriftecg)
+    offset=addoffset(noisedecg, 0.5)
 
-plotecg(x, ecg)
-plotecg(x, mainsecg)
-plotecg(x, basedriftecg)
-plotecg(x, smallerdrift)
-plotecg(x, noisedecg)
-plotecg(x, offset)
+    plotecg(x, offset)
+    return offset, x
+
+fakeecg(60)
