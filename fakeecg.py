@@ -87,4 +87,4 @@ def whole_fakeecg(samples)  #samples is time in seconds of fake ecg
     plotecg(x, offset)
     return offset, x
 
-fakeecg(60)
+whole_fakeecg(60)
