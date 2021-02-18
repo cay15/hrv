@@ -75,7 +75,7 @@ def addoffset(ecg, amp):
     offset_ecg = [x+delta for x in ecg]
     return offset_ecg
 
-def fakeecg(samples)  #samples is time in seconds of fake ecg  
+def whole_fakeecg(samples)  #samples is time in seconds of fake ecg  
     ecg, x=fakeecg(samples)
 
     mainsecg=addnoise(ecg, samples, 50, 0.25) #adds mains noise of 50Hz
