@@ -4,7 +4,8 @@ Created on Wed Feb 17 22:09:27 2021
 @author: Tarane Subramaniam
 """
 
-# Main file where individual .py files are combined and HRV analysis will be done
+####UPSAMPLING ECG TO 1kHz####
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
