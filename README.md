@@ -1,13 +1,17 @@
 # hrv
 
 ## Links
-Database of normal sinus rhythms: https://www.kaggle.com/shymammoth/mitbih-normal-sinus-rhythm-database
+Database of all ECGs (converted to CSV on site): https://archive.physionet.org/cgi-bin/atm/ATM
+Database of normal sinus rhythms (dat,atr): https://www.kaggle.com/shymammoth/mitbih-normal-sinus-rhythm-database
 
 ## File descriptions
 ### Databases
 mit-bih-normal-sinus-rhythm-database-1.0.0 (folder)
-- Files from Kaggle database of normal sinus rhythms
-- Manually created .csv files of these samples
+- Manually created .csv files of the ECGs for following conditions:
+  > Normal sinus rhythms (16265, 16272, 16273)
+  > Arrythmia 
+  > Malignant Ventricular Ectopy 
+  > Supraventricular Arrythmia
 
 ### Week of 9/2
 filter.py

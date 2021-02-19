@@ -128,10 +128,7 @@ def get_rr(peaks,y_m):
 
 ## Return array of RR intervals
     rr_intervals=[0]*(len(r_peaks)-1)
-
-    print("size: "+str(len(rr_intervals)))
-    print("size: "+str(len(r_peaks)))
-
+    
     for i in range(len(rr_intervals)):
         rr_intervals[i]=r_peaks[i+1]-r_peaks[i]
     print("RR intervals: "+str(rr_intervals))
