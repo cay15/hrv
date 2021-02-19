@@ -28,7 +28,7 @@ yVal = whole_signal.ecg1
 
 ## 2. CREATION OF ARTIFICIAL ECG
 
-artificial_ecg, xtime=whole_fakeecg(120)
+artificial_ecg, xtime = whole_fakeecg(120)
 
 ## 3. PRE-PROCESSING
 
