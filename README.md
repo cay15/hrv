@@ -9,9 +9,9 @@ Database of normal sinus rhythms (dat,atr): https://www.kaggle.com/shymammoth/mi
 mit-bih-normal-sinus-rhythm-database-1.0.0 (folder)
 - Manually created .csv files of the ECGs for following conditions:
   > Normal sinus rhythms (16265, 16272, 16273)
-  > Arrythmia 
-  > Malignant Ventricular Ectopy 
-  > Supraventricular Arrythmia
+  > Arrythmia (arrythmia)
+  > Malignant Ventricular Ectopy (malignant)
+  > Supraventricular Arrythmia (sva)
 
 ### Week of 9/2
 filter.py
