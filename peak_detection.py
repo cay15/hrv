@@ -68,7 +68,7 @@ def diffs(y):
             d1[i]=0
         else: d1[i]=-1
 
-## Find R peaks
+## Find local peaks
 # THRESHOLD: If a 2nd difference=-2, the next sample is an R peak.
     peaks=[]
     for i in range(len(d2)):
