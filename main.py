@@ -5,22 +5,47 @@ from fakeecg import whole_fakeecg
 
 ## 1. INPUT RAW ECG
 
-# Import ECG (.csv), get fs
-column_names = [    #create a table with 3 columns depending on .csv file
+#ask user for input
+filename = input("Enter your filename (including .csv): ")
+print("Loading", filename + "...")
+
+# Import ECG (.csv)
+#create a table with 3 columns depending on .csv file
+column_names = [
     't',
     'ecg1',
     'ecg2',
     ]
 
 #read the .csv file into a dataframe using pandas and skip the first 2 rows
-whole_signal = pd.read_csv('arrhythmiaECGsample.csv', sep=',',
+whole_signal = pd.read_csv(filename, sep=',',
                            names = column_names, skiprows = 2)
-xVal = whole_signal.t
-yVal = whole_signal.ecg1
+
+#get the sampling frequency of original signal
+t_samp = whole_signal.t[1]
+f_samp = int(1/t_samp)
 
 # Split signal into chunks
+#create a new array containing first 'f_samp' samples of ecg1,ecg2 and time
+ecg1 = np.array(whole_signal.ecg1[0:(f_samp+1)])
+ecg2 = np.array(whole_signal.ecg2[0:(f_samp+1)])
+time = np.array(whole_signal.t[0:(f_samp+1)])
 
 # Interpolate
+#combine each new ecg array with new time array into a dataframe for upsampling
+split_signal = np.stack((time, ecg1,ecg2), axis = 1)
+#convert split_signal into a DataFrame with column headers
+split_signal = pd.DataFrame(split_signal, columns=column_names)
+
+#set the time column as datetime index for upsampling
+split_signal['t'] = pd.to_datetime(split_signal['t'], unit='s')
+upsampled = split_signal.set_index('t').resample('1ms').mean()  #sampling rate 1000Hz
+
+# Interpolate to fill in missing values in upsampled dataframe
+interpolated = upsampled.interpolate(method='spline', order=2) #can also use method = 'cubic'
+
+xVal = interpolated.ecg1
+yVal = interpolated.ecg1
 
 # Resample
 
