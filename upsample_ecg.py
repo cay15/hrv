@@ -103,7 +103,7 @@ split_signal['t'] = pd.to_datetime(split_signal['t'], unit='s')
 upsampled = split_signal.set_index('t').resample('1ms').mean()  #sampling rate 1000Hz
 
 # Interpolate to fill in missing values in upsampled dataframe
-interpolated = upsampled.interpolate(method='spline', order=2)
+interpolated = upsampled.interpolate(method='spline', order=2) #can also use method = 'cubic'
 
 
 plt.figure(6)
