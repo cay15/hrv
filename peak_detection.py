@@ -10,11 +10,11 @@ from scipy.signal import find_peaks
 from math import sqrt
 
 
-df=pd.read_csv('ecgSample.csv',header=[0, 1])
+df=pd.read_csv('./mit-bih-database/arrythmia_100.csv',header=[0, 1])
 print(df.head())
 
 xVal=df[["'sample interval'"]]
-yVal=df[["'ECG1'"]]
+yVal=df[["'MLII'"]]
 
 y=yVal[0:1000].to_numpy()
 y=y.ravel() # converts ECG data to 1D array, the appropriate format to finding peaks
@@ -128,7 +128,7 @@ def get_rr(peaks,y_m):
 
 ## Return array of RR intervals
     rr_intervals=[0]*(len(r_peaks)-1)
-    
+
     for i in range(len(rr_intervals)):
         rr_intervals[i]=r_peaks[i+1]-r_peaks[i]
     print("RR intervals: "+str(rr_intervals))
