@@ -87,7 +87,9 @@ def filter(data, sampling_rate, cutoff, order=2, filtertype='lowpass'):
     elif filtertype.lower() == 'highpass':
         b, a = highpass(sampling_rate, cutoff, order=order)
     elif filtertype.lower() == 'notch':
-        b, a = iirnotch(cutoff, Q=cutoff/2, fs=sampling_rate)
+        w0 = cutoff/ (sampling_rate/2)  # normalised cutoff is cutoff frequency divided by nyquist frequency
+        Q = w0/2    # Q = w0/bandwidth where bandwidth=2
+        b, a = iirnotch(cutoff, Q, sampling_rate)
     else:
         raise ValueError('filtertype: %s is unknown, available are: \ lowpass, highpass, and notch' % filtertype)
 
