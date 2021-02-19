@@ -42,14 +42,14 @@ def fakeecg(nosamples):
     whole_ecg=signal.resample(whole_ecg, 1000*num_heart_beats)
     """
     code i used previously and am not sure whether i might have to use again
-    #samples_rest = 63 #must be 9/10 of the signal so =9*samples qrs
-    #zero_array = numpy.zeros(samples_rest, dtype=float)#creates the rest section
-    #pqrst_full = numpy.concatenate([qrs,zero_array]) #combines the rest section and qrs
+    samples_rest = 63 #must be 9/10 of the signal so =9*samples qrs
+    zero_array = numpy.zeros(samples_rest, dtype=float)#creates the rest section
+    pqrst_full = numpy.concatenate([qrs,zero_array]) #combines the rest section and qrs
     
-    #newpqrst=signal.resample(pqrst_full, 1000)
-    #xnew=numpy.linspace(0, 1, 1000, endpoint=False)
+    newpqrst=signal.resample(pqrst_full, 1000)
+    xnew=numpy.linspace(0, 1, 1000, endpoint=False)
 
-    #ecg_template = numpy.tile(newpqrst , num_heart_beats)#puts all the beats together
+    ecg_template = numpy.tile(newpqrst , num_heart_beats)#puts all the beats together
     """
     xarray=numpy.linspace(0, len(whole_ecg), num=len(whole_ecg))
     return whole_ecg, xarray
@@ -87,4 +87,3 @@ def whole_fakeecg(samples)  #samples is time in seconds of fake ecg
     plotecg(x, offset)
     return offset, x
 
-whole_fakeecg(60)

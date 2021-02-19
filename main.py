@@ -1,6 +1,7 @@
 # Main file where individual .py files are combined and HRV analysis will be done
 import pandas as pd
 from filter import plot_data,filter
+from fakeecg import whole_fakeecg
 
 ## 1. INPUT RAW ECG
 
@@ -25,8 +26,12 @@ yVal = whole_signal.ecg1
 
 # Output: 'feather'/'pickle' format?
 
+## 2. CREATION OF ARTIFICIAL ECG
 
-## 2. PRE-PROCESSING
+artificial_ecg, xtime=whole_fakeecg(120)
+
+## 3. PRE-PROCESSING
+
 plot_data(xVal,yVal,1000,'Original Signal') # plot original signal from ecgSample
 
 # Baseline offset removal
@@ -46,8 +51,8 @@ plot_data(xVal,filtered_signal,1000,'Lowpass Filtered')
 # consider: anomalous/atopic beats
 
 
-## 3. R PEAK DETECTION
+## 4. R PEAK DETECTION
 
-## 4. RR INTERVALS
+## 5. RR INTERVALS
 
 ## consider: frequency domain conversion
