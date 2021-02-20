@@ -9,9 +9,13 @@ import matplotlib.pyplot as plt
 name=input("Please enter the file name: ")
 f=open(name)
 df=pd.read_csv(f, header=[0, 1])
+header=df.columns
+samplinginterval=header[0][1]
+numerical_sampleinterval=samplinginterval.replace(' sec', '')
+print(numerical_sampleinterval)
 print(df.head())
 
-xpoints=df[["'Elapsed time'"]]
+xpoints=df[["'sample interval'"]]
 ypoints=df[["'ECG1'"]]
 zpoints=df[["'ECG2'"]]
 

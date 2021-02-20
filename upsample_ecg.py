@@ -29,7 +29,16 @@ column_names = [
 whole_signal = pd.read_csv(filename, sep=',',
                            names = column_names, skiprows = 2)
 
+#Hi Tara, here's a piece of code which opens the file and accesses the sampling rate
+df=pd.read_csv(f, header=[0, 1]) #takes in the csv and tells the program that the first two lines are header
+header=df.columns #makes a list of header titles
+samplinginterval=header[0][1] #records the sampling interval but has sec on end
+numerical_sampleinterval=samplinginterval.replace(' sec', '') #removes sec so the interbal is just a number
+print(numerical_sampleinterval)
 
+xpoints=df[["'sample interval'"]] #gives sample no
+ypoints=df[["'ECG1'"]] #gives first ecg
+zpoints=df[["'ECG2'"]] #gives second ecg
 
 #get the sampling frequency of original signal
 t_samp = whole_signal.t[1]
