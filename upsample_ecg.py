@@ -118,43 +118,6 @@ plt.xlabel('Time(sec)')
 plt.title('ECG2 for 1 second (Original vs. Resampled)')
 
 
-'''
-#alternative method to resample Time Series Data
-#combine each new ecg array with new time array into a dataframe for upsampling
-split_signal = np.stack((time, ecg1,ecg2), axis = 1)
-#convert split_signal into a DataFrame with column headers
-split_signal = pd.DataFrame(split_signal, columns=column_names)
-
-
-split_signal['t'] = pd.to_datetime(split_signal['t'], unit='s')
-upsampled = split_signal.set_index('t').resample('1ms').mean()  #sampling rate 1000Hz
-
-# Interpolate
-interpolated = upsampled.interpolate(method='spline', order=2)
-
-#create a new time axis
-upsampled_time = np.array([i/1000 for i in range(0, len(upsampled.ecg1), 1)])
-names = ['t']
-upsampled_time = pd.DataFrame(upsampled_time, columns = names)
-
-#combine the upsampled_time dataframe with interpolated ecgs dataframe
-#upsampled_sig = pd.concat([upsampled_time,interpolated.ecg1, interpolated.ecg2], axis = 1)
-
-
-plt.figure(6)
-plt.plot(upsampled_time, interpolated.ecg1, '.-')
-plt.title("ECG1 for 1 second (1kHz)")
-plt.xlabel("Time(sec)")
-plt.ylabel("MLII/mV")
-
-plt.figure(7)
-plt.plot(upsampled_time, interpolated.ecg2,'.-')
-plt.title("ECG2 for 1 second (1kHz)")
-plt.xlabel("Time(sec)")
-plt.ylabel("V5/mV")
-
-'''
-
 #convert tuple to dataframe
 ecg1 = np.transpose(resampled_ecg1[0])
 time = np.transpose(resampled_ecg1[1])
