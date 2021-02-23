@@ -7,9 +7,9 @@ from scipy.signal import filtfilt, iirnotch, butter
 #df=pd.read_csv('ecgSample.csv',header=[0, 1])
 #print(df.head())
 
-def plot_data(xVal,yVal,length,Title='ECG Signal',xlabel='Time/s',ylabel='Amplitude'):
+def plot_data(xVal,yVal,length,fs,Title='ECG Signal',xlabel='Time/s',ylabel='Amplitude'):
     plt.figure()
-    plt.plot(xVal[0:length]/360,yVal[0:length])
+    plt.plot(xVal[0:length]/fs,yVal[0:length])
     plt.ylabel(ylabel)
     plt.xlabel(xlabel)
     plt.title(Title)
