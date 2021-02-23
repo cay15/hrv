@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
-from scipy.signal import filtfilt, iirnotch, butter, wiener
+from scipy.signal import filtfilt, iirnotch, butter, wiener, savgol_filter
 
 #df=pd.read_csv('ecgSample.csv',header=[0, 1])
 #print(df.head())
@@ -95,10 +95,12 @@ def filter(data, sampling_rate, cutoff, order=2, filtertype='lowpass'):
         b, a = iirnotch(w0, Q, sampling_rate)
     elif filtertype.lower() == 'wiener':
         filtered_data = wiener(signal)
+    elif filtertype.lower() == 'savgol':
+        filtered_data = savgol_filter(signal,5,order)
     else:
         raise ValueError('filtertype: %s is unknown, available are: \ lowpass, highpass, and notch' % filtertype)
 
-    if filtertype.lower() != 'wiener':
+    if (filtertype.lower() != 'wiener') and (filtertype.lower() != 'savgol'):
         filtered_data = filtfilt(b, a, signal)  # applies filter forward and backward to a signal
 
     # convert numpy array back to dataframe for plotting
