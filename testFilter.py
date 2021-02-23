@@ -100,6 +100,10 @@ filtered_signal = filter(upsampled_sig.ecg1,1000,150,2,'lowpass')    # removes c
 filtered_signal = filter(upsampled_sig.ecg1,1000,150,2,'wiener')    # removes components above 150Hz
 plot_data(upsampled_sig.t,filtered_signal,8000,1000,'Wiener Filtered')
 
+# Savgol filter
+filtered_signal = filter(upsampled_sig.ecg1,1000,150,2,'savgol')    # removes components above 150Hz
+plot_data(upsampled_sig.t,filtered_signal,8000,1000,'Savgol Filtered')
+
 # Apply all filters to denoise ECG
 filteredSig = denoise(upsampled_sig.ecg1,1000,150,0.5,50,2)
 plot_data(upsampled_sig.t,filteredSig,8000,1000,'Denoised ECG')
