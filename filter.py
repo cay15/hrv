@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
-from scipy.signal import filtfilt, iirnotch, butter
+from scipy.signal import filtfilt, iirnotch, butter, wiener
 
 #df=pd.read_csv('ecgSample.csv',header=[0, 1])
 #print(df.head())
@@ -82,6 +82,9 @@ def filter(data, sampling_rate, cutoff, order=2, filtertype='lowpass'):
     :return: filtered signal
     '''
 
+    signal = data.to_numpy()  # convert column in dataframe to a numpy array
+    signal = signal.T  # transpose numpy array into row vector
+
     if filtertype.lower() == 'lowpass':
         b, a = lowpass(sampling_rate, cutoff, order=order)
     elif filtertype.lower() == 'highpass':
@@ -90,13 +93,13 @@ def filter(data, sampling_rate, cutoff, order=2, filtertype='lowpass'):
         w0 = cutoff/ (sampling_rate/2)  # normalised cutoff is cutoff frequency divided by nyquist frequency
         Q = 30    # Q = w0/bandwidth where bandwidth=2
         b, a = iirnotch(w0, Q, sampling_rate)
+    elif filtertype.lower() == 'wiener':
+        filtered_data = wiener(signal)
     else:
         raise ValueError('filtertype: %s is unknown, available are: \ lowpass, highpass, and notch' % filtertype)
 
-    signal = data.to_numpy()  # convert column in dataframe to a numpy array
-    signal = signal.T         # transpose numpy array into row vector
-
-    filtered_data = filtfilt(b, a, signal)  # applies filter forward and backward to a signal
+    if filtertype.lower() != 'wiener':
+        filtered_data = filtfilt(b, a, signal)  # applies filter forward and backward to a signal
 
     # convert numpy array back to dataframe for plotting
     filtered_data = filtered_data.T
