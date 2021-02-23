@@ -96,11 +96,28 @@ def filter(data, sampling_rate, cutoff, order=2, filtertype='lowpass'):
     signal = data.to_numpy()  # convert column in dataframe to a numpy array
     signal = signal.T         # transpose numpy array into row vector
 
-    filtered_data = filtfilt(b, a, signal)  # applies notch filter forward and backward to a signal
+    filtered_data = filtfilt(b, a, signal)  # applies filter forward and backward to a signal
 
     # convert numpy array back to dataframe for plotting
     filtered_data = filtered_data.T
     filtered_df = pd.DataFrame(filtered_data, columns=['y'])
     return filtered_df
 
+def denoise(data, sampling_rate, cutoffLow, cutoffHigh, cutoff, order=2):
+    b, a = lowpass(sampling_rate, cutoffLow, order=order)
+    c, d = highpass(sampling_rate, cutoffHigh, order=order)
+    w0 = cutoff / (sampling_rate / 2)  # normalised cutoff is cutoff frequency divided by nyquist frequency
+    Q = 30  # Q = w0/bandwidth where bandwidth=2
+    e, f = iirnotch(w0, Q, sampling_rate)
 
+    signal = data.to_numpy()  # convert column in dataframe to a numpy array
+    signal = signal.T  # transpose numpy array into row vector
+
+    filtered_data = filtfilt(b, a, signal)  # applies lowpass filter forward and backward to a signal
+    filtered_data = filtfilt(c,d,filtered_data) # apply highpass filter
+    filtered_data = filtfilt(e,f,filtered_data) # apply notch filter
+
+    # convert numpy array back to dataframe for plotting
+    filtered_data = filtered_data.T
+    filtered_df = pd.DataFrame(filtered_data, columns=['y'])
+    return filtered_df
