@@ -55,7 +55,7 @@ f_samp = int(1/t_samp)
 print(f_samp)
 
 # Plot the original signal
-plot_data(whole_signal.t,whole_signal.ecg1,8*f_samp,f_samp,"ECG 1")
+#plot_data(whole_signal.t,whole_signal.ecg1,8*f_samp,f_samp,"ECG 1")
 
 # Split signal into chunks
 #create a new array containing first 1024 (~8 waves) samples of ecg1,ecg2 and time
@@ -86,15 +86,19 @@ plot_data(upsampled_sig.t,upsampled_sig.ecg1,resampledLength,f_samp,'Resampled E
 ## Filter resampled ECG
 # Baseline drift removal (high-pass filter)
 filtered_signal = filter(upsampled_sig.ecg1,1000,0.5,2,'highpass')   # removes baseline drift
-plot_data(upsampled_sig.t,filtered_signal,8000,1000,'Highpass Filtered')
+#plot_data(upsampled_sig.t,filtered_signal,8000,1000,'Highpass Filtered')
 
 # Mains noise removal (notch filter)
 filtered_signal = filter(upsampled_sig.ecg1,1000,50,2,'notch')   # removes 50Hz mains noise (49-51Hz)
-plot_data(upsampled_sig.t,filtered_signal,8000,1000,'Notch Filtered')
+#plot_data(upsampled_sig.t,filtered_signal,8000,1000,'Notch Filtered')
 
 # High-frequency noise removal (low-pass filter)
 filtered_signal = filter(upsampled_sig.ecg1,1000,150,2,'lowpass')    # removes components above 150Hz
-plot_data(upsampled_sig.t,filtered_signal,8000,1000,'Lowpass Filtered')
+#plot_data(upsampled_sig.t,filtered_signal,8000,1000,'Lowpass Filtered')
+
+# Wiener filter
+filtered_signal = filter(upsampled_sig.ecg1,1000,150,2,'wiener')    # removes components above 150Hz
+plot_data(upsampled_sig.t,filtered_signal,8000,1000,'Wiener Filtered')
 
 # Apply all filters to denoise ECG
 filteredSig = denoise(upsampled_sig.ecg1,1000,150,0.5,50,2)
