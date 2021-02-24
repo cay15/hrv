@@ -2,6 +2,7 @@
 import pandas as pd
 from filter import plot_data,filter
 from fakeecg import whole_fakeecg
+import numpy as np
 
 ## 1. INPUT RAW ECG
 
