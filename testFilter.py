@@ -55,13 +55,13 @@ f_samp = int(1/t_samp)
 print(f_samp)
 
 # Plot the original signal
-#plot_data(whole_signal.t,whole_signal.ecg1,8*f_samp,f_samp,"ECG 1")
+plot_data(whole_signal.t,whole_signal.ecg1,5*f_samp,f_samp,"ECG 1")
 
 # Split signal into chunks
 #create a new array containing first 1024 (~8 waves) samples of ecg1,ecg2 and time
-short_ecg1 = np.array(whole_signal.ecg1[0:8*f_samp])
-short_ecg2 = np.array(whole_signal.ecg2[0:8*f_samp])
-time = np.array(whole_signal.t[0:8*f_samp+1])
+short_ecg1 = np.array(whole_signal.ecg1[0:5*f_samp])
+short_ecg2 = np.array(whole_signal.ecg2[0:5*f_samp])
+time = np.array(whole_signal.t[0:5*f_samp])
 chunkLength = len(short_ecg1)
 resampledLength = math.floor(1000*chunkLength/f_samp)
 print(chunkLength)
@@ -98,12 +98,12 @@ filtered_signal = filter(upsampled_sig.ecg1,1000,150,2,'lowpass')    # removes c
 
 # Wiener filter
 filtered_signal = filter(upsampled_sig.ecg1,1000,150,2,'wiener')    # removes components above 150Hz
-plot_data(upsampled_sig.t,filtered_signal,8000,1000,'Wiener Filtered')
+plot_data(upsampled_sig.t,filtered_signal,5000,f_samp,'Wiener Filtered')
 
 # Savgol filter
 filtered_signal = filter(upsampled_sig.ecg1,1000,150,2,'savgol')    # removes components above 150Hz
-plot_data(upsampled_sig.t,filtered_signal,8000,1000,'Savgol Filtered')
+plot_data(upsampled_sig.t,filtered_signal,5000,f_samp,'Savgol Filtered')
 
 # Apply all filters to denoise ECG
-filteredSig = denoise(upsampled_sig.ecg1,1000,150,0.5,50,2)
-plot_data(upsampled_sig.t,filteredSig,8000,1000,'Denoised ECG')
+filteredSig = denoise(upsampled_sig.ecg1,1000,100,0.5,50,2)
+plot_data(upsampled_sig.t,filteredSig,5000,f_samp,'Denoised ECG')
