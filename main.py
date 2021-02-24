@@ -1,8 +1,10 @@
 # Main file where individual .py files are combined and HRV analysis will be done
 import pandas as pd
-from filter import plot_data,filter
 from fakeecg import whole_fakeecg
+from scipy import signal
+from filter import plot_data,filter, denoise
 import numpy as np
+import math
 
 ## 1. INPUT RAW ECG
 
@@ -12,7 +14,7 @@ print("Loading", filename + "...")
 
 # Import ECG (.csv)
 #create a table with 3 columns depending on .csv file
-column_names = [
+column_names = [    #create a table with 3 columns depending on .csv file
     't',
     'ecg1',
     'ecg2',
@@ -22,33 +24,45 @@ column_names = [
 whole_signal = pd.read_csv(filename, sep=',',
                            names = column_names, skiprows = 2)
 
+#read the file header and access the sampling rate
+df=pd.read_csv(filename, header=[0, 1]) #takes in the csv and tells the program that the first two lines are header
+header=df.columns #makes a list of header titles
+samplinginterval=header[0][1] #records the sampling interval but has sec on end
+numerical_sampleinterval=samplinginterval.replace(" sec", "") #removes sec so the interval is just a number
+numerical_sampleinterval=numerical_sampleinterval.replace("'", "") #removes "'" so str can be converted into float
+t_samp = float(numerical_sampleinterval)
+
 #get the sampling frequency of original signal
-t_samp = whole_signal.t[1]
 f_samp = int(1/t_samp)
 
+# Plot the original signal
+plot_data(whole_signal.t,whole_signal.ecg1,5*f_samp,f_samp,"ECG 1")
+
 # Split signal into chunks
-#create a new array containing first 'f_samp' samples of ecg1,ecg2 and time
-ecg1 = np.array(whole_signal.ecg1[0:(f_samp+1)])
-ecg2 = np.array(whole_signal.ecg2[0:(f_samp+1)])
-time = np.array(whole_signal.t[0:(f_samp+1)])
+#create a new array containing first 1024 (~8 waves) samples of ecg1,ecg2 and time
+short_ecg1 = np.array(whole_signal.ecg1[0:5*f_samp])
+short_ecg2 = np.array(whole_signal.ecg2[0:5*f_samp])
+time = np.array(whole_signal.t[0:5*f_samp])
+chunkLength = len(short_ecg1)
+resampledLength = math.floor(1000*chunkLength/f_samp)
+print(chunkLength)
 
-# Interpolate
-#combine each new ecg array with new time array into a dataframe for upsampling
-split_signal = np.stack((time, ecg1,ecg2), axis = 1)
-#convert split_signal into a DataFrame with column headers
-split_signal = pd.DataFrame(split_signal, columns=column_names)
+#resampling signal to 1000Hz using scipy.signal.resample
+#note: this produces a tuple
+resampled_ecg1 = signal.resample(short_ecg1,resampledLength, t = time)
+resampled_ecg2 = signal.resample(short_ecg2,resampledLength, t = time)
 
-#set the time column as datetime index for upsampling
-split_signal['t'] = pd.to_datetime(split_signal['t'], unit='s')
-upsampled = split_signal.set_index('t').resample('1ms').mean()  #sampling rate 1000Hz
+#convert tuple to dataframe
+ecg1 = np.transpose(resampled_ecg1[0])
+time = np.transpose(resampled_ecg1[1])
+ecg2 = np.transpose(resampled_ecg2[0])
 
-# Interpolate to fill in missing values in upsampled dataframe
-interpolated = upsampled.interpolate(method='spline', order=2) #can also use method = 'cubic'
+upsampled_sig = np.stack((time, ecg1, ecg2), axis = 1)
+upsampled_sig = pd.DataFrame(upsampled_sig, columns = column_names)
 
-xVal = interpolated.ecg1
-yVal = interpolated.ecg1
+# Plot resampled ECG
+plot_data(upsampled_sig.t,upsampled_sig.ecg1,resampledLength,f_samp,'Resampled ECG')
 
-# Resample
 
 # Output: 'feather'/'pickle' format?
 
@@ -58,21 +72,9 @@ artificial_ecg, xtime = whole_fakeecg(120)
 
 ## 3. PRE-PROCESSING
 
-plot_data(xVal,yVal,1000,'Original Signal') # plot original signal from ecgSample
-
-# Baseline offset removal
-
-# Baseline drift removal (high-pass filter)
-filtered_signal = filter(yVal,128,0.5,2,'highpass')   # removes baseline drift
-plot_data(xVal,filtered_signal,1000,'Highpass Filtered')
-
-# Mains noise removal (notch filter)
-filtered_signal = filter(filtered_signal,128,50,2,'notch')   # removes 50Hz mains noise (49-51Hz)
-plot_data(xVal,filtered_signal,1000,'Notch Filtered')
-
-# High-frequency noise removal (low-pass filter)
-filtered_signal = filter(filtered_signal,128,100,2,'lowpass')    # removes components above 150Hz
-plot_data(xVal,filtered_signal,1000,'Lowpass Filtered')
+# Apply all filters to denoise ECG
+filteredSig = denoise(upsampled_sig.ecg1,1000,100,0.5,50,2)
+plot_data(upsampled_sig.t,filteredSig,5000,f_samp,'Denoised ECG')
 
 # consider: anomalous/atopic beats
 
