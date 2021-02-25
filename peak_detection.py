@@ -10,15 +10,16 @@ from scipy.signal import find_peaks
 from math import sqrt
 
 
-df=pd.read_csv('./mit-bih-database/arrythmia_100.csv',header=[0, 1])
+df=pd.read_csv('./mit-bih-database/MITBIH_Norm16265.csv',header=[0, 1])
 print(df.head())
 
 xVal=df[["'sample interval'"]]
-yVal=df[["'MLII'"]]
+yVal=df.iloc[:,1]
+interval=0.0078125 # change to t_samp when integrated into main.py
 
 y=yVal[0:1000].to_numpy()
 y=y.ravel() # converts ECG data to 1D array, the appropriate format to finding peaks
-#print(y)
+print(y)
 
 ## Mirror negative R peaks if present
 # THRESHOLD: for each point, check whether adjacent points within 0.3s (0.3/0.0078125=38 samples) has an amplitude at least 1.5 times smaller.
@@ -41,6 +42,8 @@ y_m=mirror_ecg(y)
 #print(y)
 #print(y_m)
 
+#If mirroring function not used:
+#y_m=y
 
 # DEBUG: Check that negative peaks are mirrored correctly
 plt.figure(0)
@@ -85,7 +88,10 @@ plt.plot(peaks,y_m[peaks],"x")
 plt.show()
 
 ## Average amplitude a and width w of peaks determines the threshold in which R peaks are detected
-def get_rr(peaks,y_m):
+def get_rr(peaks,y_m, interval):
+    interval=0.0078
+    print("interval: "+str(interval))
+
     w=[0]*(len(peaks)-1)
     w_tot=0
     a_tot=0
@@ -110,7 +116,7 @@ def get_rr(peaks,y_m):
 # a must be more than 1.5 times of a_avg
     r_peaks=[]
     for i in range(len(w)):
-        if w[i]>0.6*w_avg and y_m[peaks[i]]>1.5*a_avg:
+        if w[i]>0.6*w_avg and y_m[peaks[i]]>0.5*a_avg:
             r_peaks.append(peaks[i])
 
 # DEBUG: Check that R peaks are detected correctly
@@ -121,9 +127,9 @@ def get_rr(peaks,y_m):
     plt.show()
 
 # Sample numbers of R peaks are converted to time/seconds.
-# Time interval between each adjacent sample is 0.0078125s
+# Time interval between each adjacent sample is found directly below "sample interval" in chosen CSV file
     for i in range(len(r_peaks)):
-        r_peaks[i]=r_peaks[i]*0.0078125
+        r_peaks[i]=r_peaks[i]*interval
     print("Time points of R peaks: "+str(r_peaks))
 
 ## Return array of RR intervals
@@ -135,7 +141,7 @@ def get_rr(peaks,y_m):
 
     return rr_intervals
 
-rr_intervals=get_rr(peaks,y_m)
+rr_intervals=get_rr(peaks,y_m,interval)
 
 ## Calculate standard deviation of NN intervals (sdnn) and average RR interval (rr_avg), in seconds
 def hrv(rr_intervals):

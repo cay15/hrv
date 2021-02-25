@@ -14,6 +14,13 @@ mit-bih-normal-sinus-rhythm-database-1.0.0 (folder)
   - ST Change (STChange)
   - Supraventricular Arrythmia (SuperArrythmia)
 
+### Week of 16/2
+testFilter.py
+- testing of filter.py using fakeecg.py
+
+upsample_ecg.py
+- Upsampling of ECG to 1kHz or otherwise defined
+
 ### Week of 9/2
 filter.py
 - Filters for ECG
