@@ -3,6 +3,8 @@ import pandas as pd
 from fakeecg import whole_fakeecg
 from scipy import signal
 from filter import plot_data,filter, denoise
+from peak_detection import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
+import matplotlib.pyplot as plt
 import numpy as np
 import math
 
@@ -78,9 +80,30 @@ plot_data(upsampled_sig.t,filteredSig,5000,f_samp,'Denoised ECG')
 
 # consider: anomalous/atopic beats
 
-
 ## 4. R PEAK DETECTION
+# Mirror negative R peaks if present
+mirroredSig=mirror_ecg(filteredSig)
+plot_data(upsampled_sig.t,mirroredSig,5000,f_samp,'Mirrored ECG')
+
+# Find sample numbers where R peaks present
+peaks=diffs(mirroredSig)
+x=df[["'sample interval'"]]
+plt.plot(x[0:5000],mirroredSig)
+plt.plot(peaks,mirroredSig.iloc[peaks],"x")
+plt.show()
 
 ## 5. RR INTERVALS
+# edit w_t and a_t based on condition being analysed
+r_peaks=get_r_peaks(peaks,mirroredSig,0.6,2)
+plt.plot(x[0:5000],mirroredSig)
+plt.plot(r_peaks,mirroredSig.iloc[r_peaks],"x")
+plt.show()
+
+rr_intervals=get_rr(r_peaks,t_samp)
+
+# calculate SDNN and average RR interval
+sdnn,rr_avg=hrv(rr_intervals)
+print("SDNN: "+str(sdnn))
+print("avg: "+str(rr_avg))
 
 ## consider: frequency domain conversion
