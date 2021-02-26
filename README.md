@@ -15,8 +15,11 @@ mit-bih-normal-sinus-rhythm-database-1.0.0 (folder)
   - Supraventricular Arrythmia (SuperArrythmia)
 
 ### Week of 16/2
+main.py
+- Prime file for HRV extraction. It is a combination of functions imported from other individual files in this repo.
+
 testFilter.py
-- testing of filter.py using fakeecg.py
+- Testing of filter.py using fakeecg.py
 
 upsample_ecg.py
 - Upsampling of ECG to 1kHz or otherwise defined
