@@ -81,8 +81,9 @@ def decidetype():
     elif d1 == "B": 
         artificial_points, xtime = whole_fakeecg(120)
         sampfreq=1000
-        x=np.arange(len(xtime))
-        samples=pd.DataFrame(x) 
+        a=np.arange(len(xtime))
+        b=pd.DataFrame(data=a, columns=['Samples']) 
+        samples=b[['Samples']]
         return artificial_points, xtime, sampfreq, samples
 
 
@@ -106,7 +107,7 @@ plot_data(upsampled_sig.t,mirroredSig,5000,f,'Mirrored ECG')
 # Find sample numbers where local peaks present
 peaks=diffs(mirroredSig)
 # DEBUG
-plt.plot(x[0:5000],mirroredSig)
+plt.plot(x,mirroredSig)
 plt.plot(peaks,mirroredSig.iloc[peaks],"x")
 plt.title('Local peaks')
 plt.show()
@@ -115,7 +116,7 @@ plt.show()
 # edit w_t and a_t based on condition being analysed
 r_peaks=get_r_peaks(peaks,mirroredSig,0.6,4)
 # DEBUG
-plt.plot(x[0:5000],mirroredSig)
+plt.plot(x,mirroredSig)
 plt.plot(r_peaks,mirroredSig.iloc[r_peaks],"x")
 plt.title('R peaks')
 plt.show()
