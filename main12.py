@@ -114,15 +114,15 @@ plt.show()
 
 ## 5. RR INTERVALS
 # edit w_t and a_t based on condition being analysed
-r_peaks=get_r_peaks(peaks,mirroredSig,0.6,4)
+r_peaks=get_r_peaks(peaks,mirroredSig,0.6,3)
 # DEBUG
 plt.plot(x[0:len(mirroredSig)],mirroredSig)
 plt.plot(r_peaks,mirroredSig.iloc[r_peaks],"x")
 plt.title('R peaks')
 plt.show()
 
-
-rr_intervals=get_rr(r_peaks,t)
+print("t: "+str(t))
+rr_intervals=get_rr(r_peaks,1/f)
 
 # calculate SDNN and average RR interval
 sdnn,rr_avg=hrv(rr_intervals)
