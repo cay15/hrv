@@ -19,9 +19,16 @@ xpoints=df[["'sample interval'"]]
 ypoints=df[["'ECG1'"]]
 zpoints=df[["'ECG2'"]]
 
+SMALL_SIZE = 16
+plt.rc('font', size=SMALL_SIZE)
+plt.rc('axes', titlesize=SMALL_SIZE)
+
 plt.figure(0)
 plt.subplot(2, 1, 1)
 plt.plot(0.0078125*xpoints, ypoints)
+SMALL_SIZE = 16
+matplotlib.rc('font', size=SMALL_SIZE)
+matplotlib.rc('axes', titlesize=SMALL_SIZE)
 ax=plt.gca()
 #ax.axes.yaxis.set_ticks([]) 
 plt.ylabel("MLII /mV")

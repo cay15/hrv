@@ -38,7 +38,6 @@ numerical_sampleinterval=numerical_sampleinterval.replace("'", "") #removes "'" 
 t_samp = float(numerical_sampleinterval)
 
 
-
 #no_of_samples =df[["'sample interval'"]] #gives sample no
 #whole_ecg1 =df[["'ECG1'"]] #gives first ecg
 #whole_ecg2 =df[["'ECG2'"]] #gives second ecg

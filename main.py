@@ -62,6 +62,10 @@ ecg2 = np.transpose(resampled_ecg2[0])
 upsampled_sig = np.stack((time, ecg1, ecg2), axis = 1)
 upsampled_sig = pd.DataFrame(upsampled_sig, columns = column_names)
 
+SMALL_SIZE = 16
+plt.rc('font', size=SMALL_SIZE)
+plt.rc('axes', titlesize=SMALL_SIZE)
+
 # Plot resampled ECG
 plot_data(upsampled_sig.t,upsampled_sig.ecg1,resampledLength,f_samp,'Resampled ECG')
 

@@ -7,7 +7,10 @@ from peak_detection import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-    
+
+SMALL_SIZE = 16
+plt.rc('font', size=SMALL_SIZE)
+plt.rc('axes', titlesize=SMALL_SIZE)  
     
 def decidetype():
     while True: #choice to test simulation using artificial ECG or raw ECG
@@ -108,7 +111,7 @@ plot_data(upsampled_sig.t,mirroredSig,5000,f,'Mirrored ECG')
 peaks=diffs(mirroredSig)
 # DEBUG
 plt.plot(x[0:len(mirroredSig)],mirroredSig)
-plt.plot(peaks,mirroredSig.iloc[peaks],"x")
+plt.plot(peaks/f,mirroredSig.iloc[peaks],"x")
 plt.title('Local peaks')
 plt.show()
 
@@ -117,7 +120,7 @@ plt.show()
 r_peaks=get_r_peaks(peaks,mirroredSig,0.6,3)
 # DEBUG
 plt.plot(x[0:len(mirroredSig)],mirroredSig)
-plt.plot(r_peaks,mirroredSig.iloc[r_peaks],"x")
+plt.plot(r_peaks/f,mirroredSig.iloc[r_peaks],"x")
 plt.title('R peaks')
 plt.show()
 
