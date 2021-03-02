@@ -125,7 +125,7 @@ plt.show()
 
 print("t: "+str(t))
 rr_intervals=get_rr(r_peaks,1/f)
-plt.scatter(rr_intervals,np.zeros_like(rr_intervals),"x")
+plt.scatter(rr_intervals,np.zeros_like(rr_intervals))
 plt.title('Distribution of RR intervals')
 plt.show()
 
