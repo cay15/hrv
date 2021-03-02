@@ -7,10 +7,7 @@ from peak_detection import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-
-SMALL_SIZE = 16
-plt.rc('font', size=SMALL_SIZE)
-plt.rc('axes', titlesize=SMALL_SIZE)  
+  
     
 def decidetype():
     while True: #choice to test simulation using artificial ECG or raw ECG
@@ -20,8 +17,8 @@ def decidetype():
     if d1 == "A": 
         filename = input("Enter your filename (including .csv): ")
         print("Loading", filename + "...")
-
-        # Import ECG (.csv)
+        ## 1. Input File
+        #Import ECG (.csv)
         #create a table with 3 columns depending on .csv file
         column_names = [    #create a table with 3 columns depending on .csv file
             't',
@@ -82,6 +79,7 @@ def decidetype():
         
         return ecg1, time, f_samp, x
     elif d1 == "B": 
+        ## 2. Artificial ECG
         artificial_points, xtime = whole_fakeecg(120)
         sampfreq=1000
         a=np.arange(len(xtime))
@@ -94,7 +92,8 @@ ecg, t, f, x=decidetype()
 
 upsampled_sig = np.stack((t, ecg), axis = 1)
 upsampled_sig = pd.DataFrame(upsampled_sig, columns = ['t', 'ecg'])
-
+#
+## 3. FILTERING
 # Apply all filters to denoise ECG
 filteredSig = denoise(upsampled_sig.ecg,1000,100,0.5,50,2)
 plot_data(upsampled_sig.t,filteredSig,5000,f,'Denoised ECG')
@@ -111,7 +110,7 @@ plot_data(upsampled_sig.t,mirroredSig,5000,f,'Mirrored ECG')
 peaks=diffs(mirroredSig)
 # DEBUG
 plt.plot(x[0:len(mirroredSig)],mirroredSig)
-plt.plot(peaks/f,mirroredSig.iloc[peaks],"x")
+plt.plot(peaks,mirroredSig.iloc[peaks],"x")
 plt.title('Local peaks')
 plt.show()
 
@@ -120,7 +119,7 @@ plt.show()
 r_peaks=get_r_peaks(peaks,mirroredSig,0.6,3)
 # DEBUG
 plt.plot(x[0:len(mirroredSig)],mirroredSig)
-plt.plot(r_peaks/f,mirroredSig.iloc[r_peaks],"x")
+plt.plot(r_peaks,mirroredSig.iloc[r_peaks],"x")
 plt.title('R peaks')
 plt.show()
 
