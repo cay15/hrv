@@ -1,12 +1,14 @@
 # Main file where individual .py files are combined and HRV analysis will be done
 import pandas as pd
-from fakeecg import whole_fakeecg
-from scipy import signal
-from filter import plot_data,filter, denoise
-from peak_detection import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+from scipy import signal
+# The following are .py files we have written which contain the functions used in this code
+from artificial_ecg import whole_fakeecg
+from filter_ecg import plot_data,filter, denoise
+from peak_detection import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
+
   
     
 def decidetype():
