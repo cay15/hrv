@@ -7,9 +7,9 @@ import numpy as np
 import math
 from scipy import signal
 # The following are .py files we have written which contain the functions used in this code
-from artificial_ecg import whole_fakeecg
-from filter_ecg import plot_data,filter, denoise
-from peak_detection import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
+from artificial_ecg_1b import whole_fakeecg
+from filter_ecg_2 import plot_data,filter, denoise
+from peak_detection_3 import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
 
   
     
@@ -129,7 +129,11 @@ plt.show()
 
 print("t: "+str(t))
 rr_intervals=get_rr(r_peaks,1/f)
-plt.scatter(rr_intervals,np.zeros_like(rr_intervals))
+del(r_peaks[0])
+for i in range(len(r_peaks)):
+    r_peaks[i]*= 1/f
+print("r peaks: "+str(r_peaks))
+plt.plot(r_peaks,rr_intervals,"x")
 plt.title('Distribution of RR intervals')
 plt.show()
 
