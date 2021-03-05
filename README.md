@@ -21,6 +21,9 @@ Files that are included in our current coding pipeline have been numbered based 
 hrv.py
 - main12.py, renamed
 
+Ammendement on hrv.py, resulting in it being moved to "archives"
+whole_hrv.py now fully processes the whole ECG
+
 ### Week of 26/2
 main12.py
 - Same functions as main.py, with the addition of allowing the user to select between a raw ECG or artificial ECG, and different leads
