@@ -13,9 +13,9 @@ import numpy as np
 import math
 from scipy import signal
 # The following are .py files we have written which contain the functions used in this code
-from 1b_artificial_ecg import whole_fakeecg
-from 2_filter_ecg import plot_data,filter, denoise
-from 3_peak_detection import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
+from artificial_ecg_1b import whole_fakeecg
+from filter_ecg_2 import plot_data,filter, denoise
+from peak_detection_3 import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
 
   
     
