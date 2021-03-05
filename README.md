@@ -14,6 +14,17 @@ mit-bih-normal-sinus-rhythm-database-1.0.0 (folder)
   - ST Change (STChange)
   - Supraventricular Arrythmia (SuperArrythmia)
 
+### Week of 2/3
+Outdated, unused files have been moved into the folder "archives".
+Files that are included in our current coding pipeline have been numbered based on when they occur.
+
+hrv.py
+- main12.py, renamed
+
+### Week of 26/2
+main12.py
+- Same functions as main.py, with the addition of allowing the user to select between a raw ECG or artificial ECG, and different leads
+
 ### Week of 16/2
 main.py
 - Prime file for HRV extraction. It is a combination of functions imported from other individual files in this repo.
