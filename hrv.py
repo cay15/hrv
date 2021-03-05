@@ -1,3 +1,11 @@
+'''
+Summary of steps taken to extract HRV
+1a. Input raw ECG OR 1b. Artificial ECG
+2. Pre-processing
+3a. R peak detection
+3b. RR interval calculations and HRV analysis
+'''
+
 # Main file where individual .py files are combined and HRV analysis will be done
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -5,9 +13,9 @@ import numpy as np
 import math
 from scipy import signal
 # The following are .py files we have written which contain the functions used in this code
-from artificial_ecg import whole_fakeecg
-from filter_ecg import plot_data,filter, denoise
-from peak_detection import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
+from 1b_artificial_ecg import whole_fakeecg
+from 2_filter_ecg import plot_data,filter, denoise
+from 3_peak_detection import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
 
   
     
@@ -19,7 +27,7 @@ def decidetype():
     if d1 == "A": 
         filename = input("Enter your filename (including .csv): ")
         print("Loading", filename + "...")
-        ## 1. Input File
+        ## 1a. Input File
         #Import ECG (.csv)
         #create a table with 3 columns depending on .csv file
         column_names = [    #create a table with 3 columns depending on .csv file
@@ -81,7 +89,7 @@ def decidetype():
         
         return ecg1, time, f_samp, x
     elif d1 == "B": 
-        ## 2. Artificial ECG
+        ## 1b. Artificial ECG (artificial_ecg.py)
         artificial_points, xtime = whole_fakeecg(120)
         sampfreq=1000
         a=np.arange(len(xtime))
@@ -95,14 +103,14 @@ ecg, t, f, x=decidetype()
 upsampled_sig = np.stack((t, ecg), axis = 1)
 upsampled_sig = pd.DataFrame(upsampled_sig, columns = ['t', 'ecg'])
 #
-## 3. FILTERING
+## 2. FILTERING (filter_ecg.py)
 # Apply all filters to denoise ECG
 filteredSig = denoise(upsampled_sig.ecg,1000,100,0.5,50,2)
 plot_data(upsampled_sig.t,filteredSig,5000,f,'Denoised ECG')
 
 # consider: anomalous/atopic beats
 
-## 4. R PEAK DETECTION
+## 3a. R PEAK DETECTION (peak_detection.py)
 # Mirror negative R peaks if present
 mirroredSig=mirror_ecg(filteredSig)
 # DEBUG
@@ -116,7 +124,7 @@ plt.plot(peaks,mirroredSig.iloc[peaks],"x")
 plt.title('Local peaks')
 plt.show()
 
-## 5. RR INTERVALS
+## 3b. RR INTERVALS and HRV CALCULATIONS
 # edit w_t and a_t based on condition being analysed
 r_peaks=get_r_peaks(peaks,mirroredSig,0.6,3)
 # DEBUG
