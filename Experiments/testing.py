@@ -40,8 +40,9 @@ plot_data(upsampled_sig.t,upsampled_sig.ecg, len(upsampled_sig.t),f_samp,'Normal
 filteredSig = denoise(upsampled_sig.ecg,1000,100,0.5,50,2)
 plot_data(upsampled_sig.t,filteredSig, len(upsampled_sig.t),f_samp,'Denoised ECG')
 
-leftover=filteredsig-ecg1
-plot_data(upsampledsig.t, leftover, len(upsampled_sig.t), f_samp, 'LeftOver')
+C=filteredSig.y-ecg1
+
+plot_data(upsampled_sig.t, C, len(upsampled_sig.t), f_samp, 'LeftOver')
 # consider: anomalous/atopic beats
 
 ## 3. R PEAK DETECTION
@@ -60,7 +61,7 @@ plt.show()
 
 ## 4. RR INTERVALS
 # edit w_t and a_t based on condition being analysed
-r_peaks=get_r_peaks(peaks,mirroredSig,0.6,3)
+r_peaks=get_r_peaks(peaks,mirroredSig,0.6,3.4)
 # DEBUG
 plt.plot(x,mirroredSig)
 plt.plot(r_peaks,mirroredSig.iloc[r_peaks],"x")
