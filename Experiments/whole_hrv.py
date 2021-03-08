@@ -26,8 +26,8 @@ def decidetype():
         ## 1. b) Create Artificial ECG
         artificial_points, xtime = whole_fakeecg(120)
         sampfreq=1000
-        a=np.arange(len(xtime))
-        b=pd.DataFrame(data=a, columns=['Samples']) 
+        #a=np.arange(len(xtime))
+        #b=pd.DataFrame(data=a, columns=['Samples']) 
         return artificial_points, xtime, sampfreq
 
 

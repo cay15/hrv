@@ -10,8 +10,6 @@ from peak_detection_3 import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
 from input_ecg_1a import input_ecg
 
 #adding noise to normal sinus rhythm
-ecg1, t, f_samp, resampledLength=input_ecg()
-plot_data(t,ecg1,resampledLength,f_samp,'Resampled ECG')
 
 def addsomenoise(ecg1, time, f_samp, resampledLength):
     tottime=resampledLength/1000
@@ -26,6 +24,9 @@ def addsomenoise(ecg1, time, f_samp, resampledLength):
     plot_data(time,randnoise,resampledLength,f_samp,'Random Noise')
     return randnoise
 
+ecg1, t, f_samp, resampledLength=input_ecg()
+plot_data(t,ecg1,resampledLength,f_samp,'Resampled ECG')
+
 ecg=addsomenoise(ecg1, t, f_samp, resampledLength)
 f=1000
 x=np.arange(len(t))
@@ -39,6 +40,8 @@ plot_data(upsampled_sig.t,upsampled_sig.ecg, len(upsampled_sig.t),f_samp,'Normal
 filteredSig = denoise(upsampled_sig.ecg,1000,100,0.5,50,2)
 plot_data(upsampled_sig.t,filteredSig, len(upsampled_sig.t),f_samp,'Denoised ECG')
 
+leftover=filteredsig-ecg1
+plot_data(upsampledsig.t, leftover, len(upsampled_sig.t), f_samp, 'LeftOver')
 # consider: anomalous/atopic beats
 
 ## 3. R PEAK DETECTION
