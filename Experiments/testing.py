@@ -61,7 +61,7 @@ plt.show()
 
 ## 4. RR INTERVALS
 # edit w_t and a_t based on condition being analysed
-r_peaks=get_r_peaks(peaks,mirroredSig,0.6,3.4)
+r_peaks=get_r_peaks(peaks,mirroredSig,0.65,7)
 # DEBUG
 plt.plot(x,mirroredSig)
 plt.plot(r_peaks,mirroredSig.iloc[r_peaks],"x")
