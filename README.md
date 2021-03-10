@@ -13,6 +13,7 @@ mit-bih-normal-sinus-rhythm-database-1.0.0 (folder)
   - Malignant Ventricular Ectopy (MalVE)
   - ST Change (STChange)
   - Supraventricular Arrythmia (SuperArrythmia)
+  - Arrhythmia (100,101,102)
 
 ### Week of 2/3
 Outdated, unused files have been moved into the folder "archives".
