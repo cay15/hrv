@@ -162,6 +162,7 @@ def get_rr(r_peaks,t_samp):
 def hrv(rr_intervals):
     total=0
     total_sq=0
+    total_diff_sq=0
     for j in range(len(rr_intervals)):
         total+=rr_intervals[j]
         total_sq+=(rr_intervals[j]**2)
