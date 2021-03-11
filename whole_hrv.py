@@ -62,7 +62,7 @@ plt.show()
 
 ## 4. RR INTERVALS
 # edit w_t and a_t based on condition being analysed
-r_peaks=get_r_peaks(peaks,mirroredSig,0.6,4)
+r_peaks=get_r_peaks(peaks,mirroredSig,0.6,3)
 # DEBUG
 plt.plot(x,mirroredSig)
 plt.plot(r_peaks,mirroredSig.iloc[r_peaks],"x")
@@ -80,8 +80,10 @@ plt.title('Distribution of RR intervals')
 plt.show()
 
 # calculate SDNN and average RR interval
-sdnn,rr_avg=hrv(rr_intervals)
-print("SDNN: "+str(sdnn))
+rr_avg, rmssd, sdnn=hrv(rr_intervals)
 print("avg: "+str(rr_avg))
+print("RMSSD: "+str(rmssd))
+print("SDNN: "+str(sdnn))
+
 
 ## consider: frequency domain conversion
