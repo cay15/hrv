@@ -49,6 +49,7 @@ plot_data(upsampled_sig.t,filteredSig, len(upsampled_sig.t),f_samp,'Denoised ECG
 ## 3. R PEAK DETECTION
 # Mirror negative R peaks if present
 mirroredSig=mirror_ecg(filteredSig)
+#mirroredSig=filteredSig
 # DEBUG
 plot_data(upsampled_sig.t,mirroredSig,5000,f_samp,'Mirrored ECG')
 
@@ -74,7 +75,7 @@ plt.show()
 
 ## 4. RR INTERVALS
 # edit w_t and a_t based on condition being analysed
-r_peaks=get_r_peaks(peaks,mirroredSig,0.1,5)
+r_peaks=get_r_peaks(peaks,mirroredSig,0.6,5)
 
 rrtime=np.zeros(len(mirroredSig))
 amps=mirroredSig['y'].values.tolist()
