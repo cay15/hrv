@@ -101,6 +101,7 @@ plt.plot(r_peaks,rr_intervals,"x")
 plt.title('Time Series of RR intervals')
 plt.ylabel('RR Interval / s')
 plt.xlabel('Time /s')
+plt.ylim(ymin=0)
 plt.show()
 
 # calculate SDNN and average RR interval
