@@ -71,6 +71,7 @@ plt.xlabel('Time /s')
 
 plt.show()
 
+
 ## 4. RR INTERVALS
 # edit w_t and a_t based on condition being analysed
 r_peaks=get_r_peaks(peaks,mirroredSig,0.1,5)
@@ -103,8 +104,10 @@ plt.xlabel('Time /s')
 plt.show()
 
 # calculate SDNN and average RR interval
-sdnn,rr_avg=hrv(rr_intervals)
-print("SDNN: "+str(sdnn))
+rr_avg, rmssd, sdnn=hrv(rr_intervals)
 print("avg: "+str(rr_avg))
+print("RMSSD: "+str(rmssd))
+print("SDNN: "+str(sdnn))
+
 
 ## consider: frequency domain conversion
