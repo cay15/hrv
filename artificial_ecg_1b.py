@@ -88,12 +88,12 @@ def addoffset(ecg, amp):
 def whole_fakeecg(samples):  #samples is time in seconds of fake ecg
     ecg, x=fakeecg(samples)
     
-    mainsecg=addnoise(ecg, samples, 50, 0.25) #adds mains noise of 50Hz
+    mainsecg=addnoise(ecg, samples, 50, 0.8) #adds mains noise of 50Hz
     
-    basedriftecg=addnoise(mainsecg, samples, 0.3, 0.1) #adds baseline drift of 0.3Hz
+    basedriftecg=addnoise(mainsecg, samples, 0.3, 0.7) #adds baseline drift of 0.3Hz
     
     noisedecg=randomnoise(basedriftecg)
    
-    highfreqnoise=addnoise(noisedecg, samples, 200, 0.4) #adds high frequency noise of 200Hz
+    highfreqnoise=addnoise(noisedecg, samples, 200, 0.7) #adds high frequency noise of 200Hz
     
     return highfreqnoise, x

@@ -24,7 +24,7 @@ def decidetype():
         return ecg1, time, f_samp
     elif d1 == "B": 
         ## 1. b) Create Artificial ECG
-        artificial_points, xtime = whole_fakeecg(120)
+        artificial_points, xtime = whole_fakeecg(60)
         sampfreq=1000
         a=np.arange(len(xtime))
         b=pd.DataFrame(data=a, columns=['Samples']) 
@@ -36,7 +36,7 @@ f=1000
 x=np.arange(len(t))
 upsampled_sig = np.stack((t, ecg), axis = 1)
 upsampled_sig = pd.DataFrame(upsampled_sig, columns = ['t', 'ecg'])
-plot_data(upsampled_sig.t,upsampled_sig.ecg, len(upsampled_sig.t),f_samp,'Normal ECG')
+plot_data(upsampled_sig.t,upsampled_sig.ecg, len(upsampled_sig.t),f_samp,'Inputted ECG')
 
 #
 ## 2. FILTERING
@@ -54,19 +54,40 @@ plot_data(upsampled_sig.t,mirroredSig,5000,f_samp,'Mirrored ECG')
 
 # Find sample numbers where local peaks present
 peaks=diffs(mirroredSig)
+
+rtime=np.zeros(len(mirroredSig))
+amps=mirroredSig['y'].values.tolist()
+for i in peaks:
+    rtime[i]=amps[i]
 # DEBUG
-plt.plot(x,mirroredSig)
-plt.plot(peaks,mirroredSig.iloc[peaks],"x")
-plt.title('Local peaks')
+rtime= rtime[rtime != 0]
+newpeaks = [z / 1000 for z in peaks]
+
+plt.plot(x/1000,mirroredSig)
+plt.plot(newpeaks,rtime,"x")
+plt.title('Local Peaks')
+plt.ylabel('Amplitude / mV')
+plt.xlabel('Time /s')
+
 plt.show()
 
 ## 4. RR INTERVALS
 # edit w_t and a_t based on condition being analysed
-r_peaks=get_r_peaks(peaks,mirroredSig,0.6,4)
+r_peaks=get_r_peaks(peaks,mirroredSig,0.1,5)
+
+rrtime=np.zeros(len(mirroredSig))
+amps=mirroredSig['y'].values.tolist()
+for i in r_peaks:
+    rrtime[i]=amps[i]
 # DEBUG
-plt.plot(x,mirroredSig)
-plt.plot(r_peaks,mirroredSig.iloc[r_peaks],"x")
-plt.title('R peaks')
+rrtime= rrtime[rrtime != 0]
+newrpeaks = [w / 1000 for w in r_peaks]
+# DEBUG
+plt.plot(x/1000,mirroredSig)
+plt.plot(newrpeaks,rrtime,"x")
+plt.title('R Peaks')
+plt.ylabel('Amplitude / mV')
+plt.xlabel('Time /s')
 plt.show()
 
 print("t: "+str(t))
@@ -76,7 +97,9 @@ for i in range(len(r_peaks)):
     r_peaks[i]*= 1/f
 print("r peaks: "+str(r_peaks))
 plt.plot(r_peaks,rr_intervals,"x")
-plt.title('Distribution of RR intervals')
+plt.title('Time Series of RR intervals')
+plt.ylabel('RR Interval / s')
+plt.xlabel('Time /s')
 plt.show()
 
 # calculate SDNN and average RR interval
