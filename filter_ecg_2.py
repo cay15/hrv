@@ -112,7 +112,7 @@ def denoise(data, sampling_rate, cutoffLow, cutoffHigh, cutoff, order=2):
     b, a = lowpass(sampling_rate, cutoffLow, order=order)
     c, d = highpass(sampling_rate, cutoffHigh, order=order)
     #w0 = cutoff / (sampling_rate / 2)  # normalised cutoff is cutoff frequency divided by nyquist frequency only if sampling freq not specified
-    Q = 20  # Q = w0/bandwidth where bandwidth=2
+    Q = 25  # Q = w0/bandwidth where bandwidth=2
     e, f = iirnotch(cutoff, Q, sampling_rate)
 
     signal = data.to_numpy()  # convert column in dataframe to a numpy array
