@@ -75,7 +75,7 @@ plt.show()
 
 ## 4. RR INTERVALS
 # edit w_t and a_t based on condition being analysed
-r_peaks=get_r_peaks(peaks,mirroredSig,0.6,5)
+r_peaks=get_r_peaks(peaks,mirroredSig,0.6,4)
 
 rrtime=np.zeros(len(mirroredSig))
 amps=mirroredSig['y'].values.tolist()
@@ -98,7 +98,7 @@ del(r_peaks[0])
 for i in range(len(r_peaks)):
     r_peaks[i]*= 1/f
 print("r peaks: "+str(r_peaks))
-plt.plot(r_peaks,rr_intervals,"x")
+plt.plot(r_peaks,rr_intervals)
 plt.title('Time Series of RR intervals')
 plt.ylabel('RR Interval / s')
 plt.xlabel('Time /s')
