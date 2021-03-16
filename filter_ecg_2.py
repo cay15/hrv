@@ -7,7 +7,7 @@ from scipy.signal import filtfilt, iirnotch, butter, wiener, savgol_filter
 #df=pd.read_csv('ecgSample.csv',header=[0, 1])
 #print(df.head())
 
-def plot_data(xVal,yVal,length,fs,Title='ECG Signal',xlabel='Time/s',ylabel='Amplitude /mV'):
+def plot_data(xVal,yVal,length,fs,Title='ECG Signal',xlabel='Time (seconds)',ylabel='Amplitude (mV)'):
     plt.figure()
     plt.plot(xVal[0:length]/fs,yVal[0:length])
     plt.ylabel(ylabel)

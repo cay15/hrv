@@ -7,8 +7,8 @@ from scipy import signal
 # The following are .py files we have written which contain the functions used in this code
 from artificial_ecg_1b import whole_fakeecg
 from filter_ecg_2 import plot_data,filter, denoise
-from peak_detection_3 import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
-from input_ecg_1a import input_ecg
+from r_peak_detection_3 import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
+from input_real_ecg_1a import input_ecg
   
     
 def decidetype():

@@ -6,8 +6,8 @@ import random
 import pandas as pd
 import matplotlib.pyplot as plt
 from filter_ecg_2 import plot_data,filter, denoise
-from peak_detection_3 import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
-from input_ecg_1a import input_ecg
+from r_peak_detection_3 import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
+from input_real_ecg_1a import input_ecg
 
 def plotecg(x, ecg, title):
     pylab.plot(x/1000, ecg)
