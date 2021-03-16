@@ -170,7 +170,7 @@ def hrv(rr_intervals):
 
     for j in range(len(rr_intervals)):
         total_diff_sq+=(rr_intervals[j]-rr_avg)**2
-    sdnn=sqrt(total_diff_sq/(len(rr_intervals)-1))
+    sdnn=sqrt(total_diff_sq/(len(rr_intervals)))
 
     for j in range(len(rr_intervals)-1):
         total_diff_adj_sq+=(rr_intervals[j]-rr_intervals[j+1])**2
