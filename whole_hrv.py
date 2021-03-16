@@ -67,8 +67,8 @@ newpeaks = [z / 1000 for z in peaks]
 plt.plot(x/1000,mirroredSig)
 plt.plot(newpeaks,rtime,"x")
 plt.title('Local Peaks')
-plt.ylabel('Amplitude / mV')
-plt.xlabel('Time /s')
+plt.ylabel('Amplitude (mV)')
+plt.xlabel('Time (seconds)')
 
 plt.show()
 
@@ -88,8 +88,8 @@ newrpeaks = [w / 1000 for w in r_peaks]
 plt.plot(x/1000,mirroredSig)
 plt.plot(newrpeaks,rrtime,"x")
 plt.title('R Peaks')
-plt.ylabel('Amplitude / mV')
-plt.xlabel('Time /s')
+plt.ylabel('Amplitude (mV)')
+plt.xlabel('Time (seconds)')
 plt.show()
 
 print("t: "+str(t))
@@ -100,8 +100,8 @@ for i in range(len(r_peaks)):
 print("r peaks: "+str(r_peaks))
 plt.plot(r_peaks,rr_intervals)
 plt.title('Time Series of RR intervals')
-plt.ylabel('RR Interval / s')
-plt.xlabel('Time /s')
+plt.ylabel('RR Interval (seconds)')
+plt.xlabel('Time (seconds)')
 plt.ylim(ymin=0)
 plt.show()
 
