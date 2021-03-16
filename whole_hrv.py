@@ -105,11 +105,11 @@ plt.xlabel('Time (seconds)')
 plt.ylim(ymin=0)
 plt.show()
 
-# calculate SDNN and average RR interval
-rr_avg, rmssd, sdnn=hrv(rr_intervals)
+# calculate average RR interval, SDNN, RMSSD
+rr_avg, sdnn, rmssd=hrv(rr_intervals)
 print("avg: "+str(rr_avg))
-print("RMSSD: "+str(rmssd))
 print("SDNN: "+str(sdnn))
+print("RMSSD: "+str(rmssd))
 
 
 ## consider: frequency domain conversion

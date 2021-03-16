@@ -158,21 +158,25 @@ def get_rr(r_peaks,t_samp):
 
 #rr_intervals=get_rr(r_peaks,0.0078125)
 
-## Calculate standard deviation of NN intervals (sdnn) and average RR interval (rr_avg), in seconds
+## Calculate standard deviation of NN intervals (sdnn), root mean square of successive differences (rmssd) and average RR interval (rr_avg), in seconds
 def hrv(rr_intervals):
     total=0
-    total_sq=0
     total_diff_sq=0
+    total_diff_adj_sq=0
+
     for j in range(len(rr_intervals)):
         total+=rr_intervals[j]
-        total_sq+=(rr_intervals[j]**2)
     rr_avg=total/len(rr_intervals)
+
     for j in range(len(rr_intervals)):
         total_diff_sq+=(rr_intervals[j]-rr_avg)**2
-    rmssd=sqrt(total_sq/len(rr_intervals))
-    sdnn=sqrt(total_diff_sq/len(rr_intervals))
-    
-    return rr_avg, rmssd, sdnn
+    sdnn=sqrt(total_diff_sq/(len(rr_intervals)-1))
+
+    for j in range(len(rr_intervals)-1):
+        total_diff_adj_sq+=(rr_intervals[j]-rr_intervals[j+1])**2
+    rmssd=sqrt(total_diff_adj_sq/(len(rr_intervals)-1))
+
+    return rr_avg, sdnn, rmssd
 
 #sdnn,rr_avg=hrv(rr_intervals)
 
