@@ -10,9 +10,11 @@ from scipy.signal import filtfilt, iirnotch, butter, wiener, savgol_filter
 def plot_data(xVal,yVal,length,fs,Title='ECG Signal',xlabel='Time (seconds)',ylabel='Amplitude (mV)'):
     plt.figure()
     plt.plot(xVal[0:length]/fs,yVal[0:length])
-    plt.ylabel(ylabel)
-    plt.xlabel(xlabel)
-    plt.title(Title)
+    plt.ylabel(ylabel, fontsize=18)
+    plt.xlabel(xlabel, fontsize=18)
+    plt.title(Title, fontsize=20)
+    plt.xticks(fontsize=16)
+    plt.yticks(fontsize=16)
     plt.show()
 
 def highpass(sampling_rate,cutoff=0.05,order=2):
