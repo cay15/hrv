@@ -66,10 +66,11 @@ newpeaks = [z / 1000 for z in peaks]
 
 plt.plot(x/1000,mirroredSig)
 plt.plot(newpeaks,rtime,"x")
-plt.title('Local Peaks')
-plt.ylabel('Amplitude (mV)')
-plt.xlabel('Time (seconds)')
-
+plt.title('Local Peaks', fontsize=20)
+plt.ylabel('Amplitude (mV)', fontsize=18)
+plt.xlabel('Time (seconds)', fontsize=18)
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
 plt.show()
 
 
@@ -87,9 +88,11 @@ newrpeaks = [w / 1000 for w in r_peaks]
 # DEBUG
 plt.plot(x/1000,mirroredSig)
 plt.plot(newrpeaks,rrtime,"x")
-plt.title('R Peaks')
-plt.ylabel('Amplitude (mV)')
-plt.xlabel('Time (seconds)')
+plt.title('R Peaks', fontsize=20)
+plt.ylabel('Amplitude (mV)', fontsize=18)
+plt.xlabel('Time (seconds)', fontsize=18)
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
 plt.show()
 
 print("t: "+str(t))
@@ -99,10 +102,12 @@ for i in range(len(r_peaks)):
     r_peaks[i]*= 1/f
 print("r peaks: "+str(r_peaks))
 plt.plot(r_peaks,rr_intervals)
-plt.title('Time Series of RR intervals')
-plt.ylabel('RR Interval (seconds)')
-plt.xlabel('Time (seconds)')
+plt.title('Time Series of RR intervals', fontsize=20)
+plt.ylabel('RR Interval (seconds)', fontsize=18)
+plt.xlabel('Time (seconds)', fontsize=18)
 plt.ylim(ymin=0)
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
 plt.show()
 
 # calculate average RR interval, SDNN, RMSSD
