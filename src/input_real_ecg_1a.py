@@ -8,6 +8,7 @@ from filter_ecg_2 import plot_data
 def input_ecg():
     filename = input("Enter your filename (including .csv): ")
     print("Loading", filename + "...")
+    filepath = '../mit-bih-database/'+filename
     ## 1a. Input File
     #Import ECG (.csv)
     #create a table with 3 columns depending on .csv file
@@ -18,11 +19,11 @@ def input_ecg():
         ]
 
     #read the .csv file into a dataframe using pandas and skip the first 2 rows
-    whole_signal = pd.read_csv(filename, sep=',',
+    whole_signal = pd.read_csv(filepath, sep=',',
                        names = column_names, skiprows = 2)
 
     #read the file header and access the sampling rate
-    df=pd.read_csv(filename, header=[0, 1]) #takes in the csv and tells the program that the first two lines are header
+    df=pd.read_csv(filepath, header=[0, 1]) #takes in the csv and tells the program that the first two lines are header
     header=df.columns #makes a list of header titles
     samplinginterval=header[0][1] #records the sampling interval but has sec on end
     numerical_sampleinterval=samplinginterval.replace(" sec", "") #removes sec so the interval is just a number

@@ -1,8 +1,37 @@
 # hrv
 
-## Links
+## Overview
+A program that extracts measurements for Heart Rate Variability (HRV), given an input electrocardiogram (ECG) dataset. Currently, measurements include:
+- Average RR interval, or the mean time between heartbeats
+- Standard deviation of NN inntervals (SDNN), or the variation in time between heartbeats (relative to the mean)
+- Root mean squared of successive differences (RMSSD), or the variation in time between heartbeats (relative to adjacent heartbeats)
+
+## Related links
 - Database of all ECGs (converted to CSV on site): https://archive.physionet.org/cgi-bin/atm/ATM
 - Database of normal sinus rhythms (dat,atr): https://www.kaggle.com/shymammoth/mitbih-normal-sinus-rhythm-database
+
+## Technologies
+This project was created using Python 3.8.
+
+## Setup and Usage
+Enter the following on the command line to run the program:
+```
+pip3 install -r requirements.txt
+
+cd src
+python3 main.py
+```
+
+main.py will run modules from the following files in order:
+1. The program will ask the user to define the input ECG desired, by selecting from either option A or B:
+  A) A real ECG from the `/mit-bih-database/` folder. This will run the file `input_real_ecg_1a.py`. Next, the user is to input the name of the ECG file to analyse. (e.g. "MITBIH_AFib04936.csv")
+  B) A pre-made artificial ECG, resembling a typical ECG with varying noise to test the robustness of the program. This will run the file `artificial_ecg_1b.py`.
+Regardless, the program will output a 60-second sample of the ECG dataset, followed by a resampled version.
+2. The modules from the file `filter_ecg_2.py` filters any noise from the input ECG. This is done by removing low, mains and high frequency noises.
+3. `r_peak_detection_3.py` will detect R peaks from the filtered ECG. 
+4. The time intervals betweem the R peaks are calculated, known as RR intervals.
+5. HRV measurements are calculated from the RR intervals.
+
 
 ## File descriptions
 ### Databases
