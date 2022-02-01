@@ -3,11 +3,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 from scipy import signal
-from artificial_ecg_1b import randomnoise, addnoise, addoffset
-from artificial_ecg_1b import whole_fakeecg
+from artificial_ecg_1b import randomnoise, addnoise, addoffset, whole_fakeecg
 from filter_ecg_2 import plot_data,filter, denoise
-from peak_detection_3 import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
-from input_ecg_1a import input_ecg
+from r_peak_detection_3 import mirror_ecg, diffs, get_r_peaks, get_rr, hrv
+from input_real_ecg_1a import input_ecg
 
 #adding noise to normal sinus rhythm
 
@@ -79,7 +78,8 @@ plt.title('Distribution of RR intervals')
 plt.show()
 
 # calculate SDNN and average RR interval
-sdnn,rr_avg=hrv(rr_intervals)
-print("SDNN: "+str(sdnn))
+rr_avg, sdnn, rmssd=hrv(rr_intervals)
 print("avg: "+str(rr_avg))
+print("SDNN: "+str(sdnn))
+print("RMSSD: "+str(rmssd))
 

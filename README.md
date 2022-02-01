@@ -50,9 +50,6 @@ manually created .csv files of the ECGs for following conditions:
   - Arrhythmia (100,101,102)
 
 /src
-contains `main.py` and the modules of the programming pipeline.
-
-/tests
-unit testing/debugging of programming pipeline.
+contains main script `main.py`, numbered modules of the programming pipeline, and unit testing script `testing.py`.
 
 Any other "lefttover" folders created by local installation on other systems (such as `__pycache__` and `.idea`) can be safely deleted.
