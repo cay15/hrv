@@ -4,7 +4,6 @@ Inspiration from https://www.hindawi.com/journals/jhe/2017/5980541/
 
 import numpy as np
 import pandas as pd
-import matplotlib
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 from math import sqrt
@@ -114,10 +113,12 @@ def get_r_peaks(peaks,y_m, w_t, a_t):
     a_avg=a_tot/len(peaks)
     
     # DEBUG: Check that totals and averages of a and w are correct
+    '''
     print("w_tot: "+str(w_tot))
     print("a_tot: "+str(a_tot))
     print("w_avg: "+str(w_avg))
     print("a_avg: "+str(a_avg))
+    '''
 
 ## Generate array of sample numbers where R peaks are present
 # THRESHOLDS for Norm ECGs:
@@ -127,8 +128,9 @@ def get_r_peaks(peaks,y_m, w_t, a_t):
     for i in range(len(w)):
         if w[i]>w_t*w_avg and y_m[peaks[i]]>a_t*a_avg:
             r_peaks.append(peaks[i])
+    
+    # DEBUG: Check that R peaks are detected correctly
     '''
-    DEBUG: Check that R peaks are detected correctly
     print("Sample numbers of local peaks: "+str(peaks))
     print("Sample numbers of R peaks: "+str(r_peaks))
     plt.plot(xVal[0:1000],y_m)
@@ -152,7 +154,7 @@ def get_rr(r_peaks,t_samp):
 
     for i in range(len(rr_intervals)):
         rr_intervals[i]=(r_peaks[i+1]-r_peaks[i])*t_samp
-    print("RR intervals: "+str(rr_intervals))
+    #print("RR intervals: "+str(rr_intervals))
 
     return rr_intervals
 
@@ -177,12 +179,6 @@ def hrv(rr_intervals):
     rmssd=sqrt(total_diff_adj_sq/(len(rr_intervals)-1))
 
     return rr_avg, sdnn, rmssd
-
-#sdnn,rr_avg=hrv(rr_intervals)
-
-#print("SDNN: "+str(sdnn))
-#print("Average RR interval: "+str(rr_avg))
-
 
 '''
 Debugging - ensuring peak detection works through the use of find_peaks function

@@ -62,4 +62,4 @@ def input_ecg():
     upsampled_sig = np.stack((time, ecg1), axis = 1)
     upsampled_sig = pd.DataFrame(upsampled_sig, columns = ['t', 'ECG'])
 
-    return ecg1, upsampled_sig.t, f_samp, resampledLength
+    return filename, ecg1, upsampled_sig.t, f_samp, resampledLength
